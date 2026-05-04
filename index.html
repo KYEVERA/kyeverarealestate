@@ -1,64 +1,65 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="ar">
 <head>
 <meta charset="UTF-8">
-<title>KEYVERA CRM V2</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KEYVERA Real Estate</title>
+<style>
+body {margin:0;font-family:Arial;background:#0b0b0b;color:#fff}
+header {text-align:center;padding:40px;background:#000}
+header img {width:120px}
+h1 {letter-spacing:6px}
+nav {background:#111;padding:15px;text-align:center}
+nav a {color:gold;margin:0 15px;text-decoration:none;font-weight:bold}
+.section {padding:50px;text-align:center}
+.cards {display:flex;flex-wrap:wrap;justify-content:center;gap:20px}
+.card {background:#1a1a1a;padding:20px;border-radius:10px;width:250px}
+footer {background:#000;text-align:center;padding:20px}
+.whatsapp {position:fixed;bottom:20px;right:20px;background:#25D366;color:#fff;padding:15px;border-radius:50%;font-size:20px;text-decoration:none}
+</style>
 </head>
-<body style="font-family:Arial">
+<body>
 
-<h1>📊 Dashboard</h1>
+<header>
+<img src="logo.png" alt="KEYVERA Logo">
+<h1>KEYVERA</h1>
+<p>REAL ESTATE BROKERAGE</p>
+<p>العجمي - الإسكندرية</p>
+</header>
 
-<div id="stats"></div>
+<nav>
+<a href="#about">عن الشركة</a>
+<a href="#services">الخدمات</a>
+<a href="#contact">تواصل معنا</a>
+</nav>
 
-<h2>Leads</h2>
-<div id="leads"></div>
+<section id="about" class="section">
+<h2>من نحن</h2>
+<p>شركة KEYVERA للوساطة العقارية متخصصة في تسويق وبيع وشراء العقارات في منطقة العجمي، بقيادة المهندس نديم محمود حسان.</p>
+</section>
 
-<script>
-const API = "https://YOUR-BACKEND.onrender.com";
+<section id="services" class="section">
+<h2>خدماتنا</h2>
+<div class="cards">
+<div class="card">بيع شقق</div>
+<div class="card">شراء عقارات</div>
+<div class="card">استشارات عقارية</div>
+<div class="card">تسويق المشاريع</div>
+</div>
+</section>
 
-async function loadStats(){
-  const res = await fetch(API + "/stats");
-  const data = await res.json();
+<section id="contact" class="section">
+<h2>تواصل معنا</h2>
+<p>رقم الهاتف: 01206369219</p>
+<p>واتساب: 01206369219</p>
+<p>رئيس مجلس الإدارة: المهندس نديم محمود حسان</p>
+</section>
 
-  document.getElementById("stats").innerHTML =
-  `<p>Total: ${data.total} | Sold: ${data.sold} | Conversion: ${data.conversion}%</p>`;
-}
+<footer>
+<p>© 2026 KEYVERA جميع الحقوق محفوظة</p>
+</footer>
 
-async function loadLeads(){
-  const res = await fetch(API + "/leads");
-  const data = await res.json();
-
-  document.getElementById("leads").innerHTML = data.map(l => `
-    <div style="border:1px solid #000;padding:10px;margin:10px">
-      <b>${l.name}</b> - ${l.phone}<br>
-      Status:
-      <select onchange="update('${l._id}', this.value)">
-        <option ${l.status=="Lead جديد"?"selected":""}>Lead جديد</option>
-        <option ${l.status=="تم التواصل"?"selected":""}>تم التواصل</option>
-        <option ${l.status=="تم البيع"?"selected":""}>تم البيع</option>
-      </select>
-      <button onclick="del('${l._id}')">Delete</button>
-    </div>
-  `).join("");
-}
-
-async function update(id,status){
-  await fetch(API+"/leads/"+id,{
-    method:"PUT",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({status})
-  });
-}
-
-async function del(id){
-  await fetch(API+"/leads/"+id,{method:"DELETE"});
-  loadLeads();
-}
-
-loadStats();
-loadLeads();
-</script>
+<a class="whatsapp" href="https://wa.me/201206369219">💬</a>
 
 </body>
 </html>
